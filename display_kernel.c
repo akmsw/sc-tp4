@@ -58,7 +58,6 @@ static int __init drv4_init(void) /* Constructor */
 {
     int ret;
     struct device *dev_ret;
-
     printk(KERN_INFO "display_kernel: Registrado exitosamente..!!\n");
 
     if ((ret = alloc_chrdev_region(&first, 0, 1, "display_kernel")) < 0)
