@@ -37,7 +37,7 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
     else{
         //llamar a la python shit
         printk("Display Driver: se va a imprimir: %s",buffer);
-        char cmd_path[] = "/usr/bin/write";
+        char cmd_path[] = "/usr/bin/lcdwrite";
         char* cmd_argv[] = {cmd_path,buffer,NULL};
         char* cmd_envp[] = {"HOME=/", "PATH=/sbin:/bin:/usr/bin", NULL};
         int result = call_usermodehelper(cmd_path, cmd_argv, cmd_envp, UMH_WAIT_PROC);
