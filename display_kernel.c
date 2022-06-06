@@ -7,8 +7,7 @@
 #include <linux/device.h>
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
-#include <stdlib.h>
-#include <stdio.h>
+
 
 #define BUFFER_LENGTH       32
 
@@ -38,9 +37,17 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
     else{
         //llamar a la python shit
         printk("Display Driver: se va a imprimir: %s",buffer);
-        char cmd[64];
-        sprintf(cmd,"python3 ~/lcd/lcd_write.py \"%s\"",buffer);
-        system(cmd);
+        char *argv[4];
+        char *envp[4];
+        argv[0] = "/bin/bash";
+        argv[1] = "python3";
+        argv[3] = buffer;
+        argv[2] = "~/lcd/lcd_write.py";
+        envp[0] = "HOME=/";
+        envp[1] = "TERM=linux";
+        envp[2] = "PATH=/sbin:/usr/sbin:/bin:/usr/bin";
+        envp[3] = NULL;
+        call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
         return len;
     }
         
