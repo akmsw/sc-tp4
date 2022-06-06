@@ -7,9 +7,9 @@ default:
 	$(MAKE) -C $(KDIR) M=$(PWD) modules
 	mkdir -p ~/lcd
 	gcc python_executer.c -o lcdwriter
-	cp lcd_write.py /usr/bin/lcd_write.py
-	cp RPi_I2C_driver.py /usr/bin/RPi_I2C_driver.py
-	cp lcdwriter /usr/bin/lcdwriter
+	sudo cp lcd_write.py /usr/bin/lcd_write.py
+	sudo cp RPi_I2C_driver.py /usr/bin/RPi_I2C_driver.py
+	sudo cp lcdwriter /usr/bin/lcdwriter
 	sudo insmod display_kernel.ko
 
 clean:
