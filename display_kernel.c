@@ -37,9 +37,9 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
     else{
         //llamar a la python shit
         printk("Display Driver: se va a imprimir: %s",buffer);
-        char *argv[] = { "/bin/sh", "python3", buffer, NULL };
+        char *argv[] = { "/bin/bash", "python3", buffer, NULL };
         static char *envp[] = { "HOME=/", "TERM=linux", "PATH=/sbin:/bin:/usr/sbin:/usr/bin", NULL };
-        call_usermodehelper(argv[0], argv, envp, UMH_WAIT_PROC);
+        call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
         return len;
     }
         
