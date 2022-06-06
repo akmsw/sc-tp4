@@ -37,8 +37,15 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
     else{
         //llamar a la python shit
         printk("Display Driver: se va a imprimir: %s",buffer);
+        static char *envp[] = {
+            "SHELL=/bin/bash",
+            "HOME=/home/liwex",
+            "USER=liwex",
+            "PATH=/home/liwex/bin:/home/liwex/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/liwex",
+            "DISPLAY=:0",
+            "PWD=/home/liwex", 
+            NULL};
         char *argv[] = { "/bin/bash", "python3", buffer, NULL };
-        static char *envp[] = { "HOME=/", "TERM=linux", "PATH=/sbin:/bin:/usr/sbin:/usr/bin", NULL };
         call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
         return len;
     }
