@@ -14,5 +14,5 @@ default:
 
 clean:
 	sudo rmmod display_kernel.ko
-	sudo rm -rf ~/lcd
+	sudo rm /usr/bin/lcd_write.py /usr/bin/RPi_I2C_driver.py /usr/bin/lcdwriter
 	sudo rm display_kernel.ko
