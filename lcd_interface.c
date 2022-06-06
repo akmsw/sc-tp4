@@ -25,7 +25,7 @@ int main(){
             }
             fwrite(buffer,sizeof(char),strlen(buffer),file);
             fflush(file);
-            bzero(buffer,512);
+            memset(buffer,0,512);
         }
     }
 }
