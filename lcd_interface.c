@@ -23,9 +23,9 @@ int main(){
                 fclose(file);
                 return 0;
             }
-            fwrite(buffer,sizeof(char),512,file);
-            bzero(buffer,512);
+            fwrite(buffer,sizeof(char),strlen(buffer),file);
             fflush(file);
+            bzero(buffer,512);
         }
     }
 }
