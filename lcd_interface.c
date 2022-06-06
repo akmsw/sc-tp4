@@ -14,7 +14,11 @@ int main(){
     }
     while(-1){
         write(1,"Ingrese string a enviar al display: ",37);
+
         read(0,buffer,32);
+        char * clear = "                                ";
+        fwrite(clear,sizeof(char),strlen(clear),file);
+        fflush(file);
         buffer[strlen(buffer)-1] = '\0';
         if(strcmp(buffer,"salir")==0){
             fclose(file);
