@@ -6,7 +6,7 @@ PWD    := $(shell pwd)
 default:
 	$(MAKE) -C $(KDIR) M=$(PWD) modules
 	mkdir -p ~/lcd
-	gcc python_executer.c -o lcdwriter
+	gcc lcdwriter.c -o lcdwriter
 	gcc lcd_interface.c -o interface
 	sudo cp lcd_write.py /usr/bin/lcd_write.py
 	sudo cp RPi_I2C_driver.py /usr/bin/RPi_I2C_driver.py
