@@ -8,7 +8,7 @@
 int main(){
     FILE * file = fopen("/dev/display_kernel","w");
     char buffer[512];
-    memset(buffer,0,512);
+    buffer[0]='\0';
     if(!file){
         printf("Error al abrir CDD");
         exit(EXIT_FAILURE); 
@@ -25,7 +25,7 @@ int main(){
             }
             fwrite(buffer,sizeof(char),strlen(buffer),file);
             fflush(file);
-            memset(buffer,0,512);
+            buffer[0]='\0';
         }
     }
 }
