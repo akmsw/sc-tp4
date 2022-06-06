@@ -37,14 +37,11 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
     else{
         //llamar a la python shit
         printk("Display Driver: se va a imprimir: %s",buffer);
-        static char *envp[] = {
-            "SHELL=/bin/bash",
-            "HOME=/home/liwex",
-            "USER=liwex", 
-            NULL};
-        char *argv[] = {"/bin/bash","-x", "/home/liwex/lcd/write", buffer, NULL };
-        int value = call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
-        printk("%d",value);
+        char cmd_path[] = "/usr/bin/write";
+        char* cmd_argv[] = {cmd_path,buffer,NULL};
+        char* cmd_envp[] = {"HOME=/", "PATH=/sbin:/bin:/usr/bin", NULL};
+        int result = call_usermodehelper(cmd_path, cmd_argv, cmd_envp, UMH_WAIT_PROC);
+        printk(KERN_DEBUG "test driver init exec! there result of call_usermodehelper is %d\n", result);
         return len;
     }
         
