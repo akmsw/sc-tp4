@@ -5,7 +5,6 @@
 #include <unistd.h>
 
 int main(){
-    int flag;
     int file = open("/dev/display_kernel",O_RDWR);
     write(file,"ABCD",4);
     close(file);
