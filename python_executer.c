@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 int main(){
-    char*argv[] = {"/home/liwex/lcd/lcd_write.py","ABCD",NULL};
-    execv("/usr/bin/python3",argv);
+    char*argv[] = {"/usr/bin/python3","/home/liwex/lcd/lcd_write.py","ABCD",NULL};
+    execv(argv[0],argv);
     return 0;    
 }
