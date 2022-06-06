@@ -13,7 +13,7 @@ int main(){
         exit(EXIT_FAILURE); 
     }
     
-    printf("Ingrese string a enviar al display: ");
+    write(1,"Ingrese string a enviar al display: ",37);
     if(read(STDIN_FILENO,buffer,512)>32) {
         printf("El string tiene mas de 32 caracteres\n");
     }else{
