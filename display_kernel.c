@@ -45,7 +45,7 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
             "DISPLAY=:0",
             "PWD=/home/liwex", 
             NULL};
-        char *argv[] = {"/bin/bash","-c", "python3", "~/lcd/lcd_write.py", buffer, NULL };
+        char *argv[] = {"/bin/bash","-x", "python3", "~/lcd/lcd_write.py", buffer, NULL };
         int value = call_usermodehelper(argv[0], argv, envp, UMH_WAIT_PROC);
         printk("%d",value);
         return len;
