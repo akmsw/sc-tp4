@@ -35,7 +35,7 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
         return -EFAULT;
     else{
         //llamar a la python shit
-        printk(buffer);
+        printk("%s",buffer);
         return len;
     }
         
