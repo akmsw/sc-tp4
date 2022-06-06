@@ -15,10 +15,10 @@ int main(){
     }
     
     write(1,"Ingrese string a enviar al display: ",37);
-    if(read(STDIN_FILENO,buffer,512)>32) {
+    if(read(0,buffer,512)>32) {
         printf("El string tiene mas de 32 caracteres\n");
     }else{
-        buffer[strlen(buffer)] = "\0";
+        buffer[strlen(buffer)-1] = '\0';
         fwrite(buffer,sizeof(char),strlen(buffer),file);
     }
     fclose(file);
