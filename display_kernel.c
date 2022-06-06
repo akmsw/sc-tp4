@@ -7,6 +7,8 @@
 #include <linux/device.h>
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define BUFFER_LENGTH       32
 
@@ -35,7 +37,10 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
         return -EFAULT;
     else{
         //llamar a la python shit
-        printk("%s",buffer);
+        printk("Display Driver: se va a imprimir: %s",buffer);
+        char cmd[64];
+        sprintf(cmd,"python3 ~/lcd/lcd_write.py \"%s\"",buffer);
+        system(cmd);
         return len;
     }
         
