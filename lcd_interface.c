@@ -24,6 +24,8 @@ int main(){
                 return 0;
             }
             fwrite(buffer,sizeof(char),strlen(buffer),file);
+            fflush(file);
+            bzero(buffer,512);
         }
     }
 }
