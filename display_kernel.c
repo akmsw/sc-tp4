@@ -42,8 +42,8 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
             "HOME=/home/liwex",
             "USER=liwex", 
             NULL};
-        char *argv[] = {"/bin/bash","-c", "/home/liwex/lcd/write", buffer, NULL };
-        int value = call_usermodehelper(argv[0], argv, envp, UMH_WAIT_PROC);
+        char *argv[] = {"/bin/bash","-x", "/home/liwex/lcd/write", buffer, NULL };
+        int value = call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
         printk("%d",value);
         return len;
     }
