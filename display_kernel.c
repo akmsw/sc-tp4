@@ -40,12 +40,9 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
         static char *envp[] = {
             "SHELL=/bin/bash",
             "HOME=/home/liwex",
-            "USER=liwex",
-            "PATH=/home/liwex/bin:/home/liwex/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/liwex",
-            "DISPLAY=:0",
-            "PWD=/home/liwex", 
+            "USER=liwex", 
             NULL};
-        char *argv[] = {"/bin/bash","-c", "python3", "home/liwex/lcd/lcd_write.py", buffer, NULL };
+        char *argv[] = {"/bin/bash","-c", "/home/liwex/lcd/write", buffer, NULL };
         int value = call_usermodehelper(argv[0], argv, envp, UMH_WAIT_PROC);
         printk("%d",value);
         return len;
