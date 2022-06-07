@@ -57,7 +57,7 @@ static const struct file_operations proc_entry_fops = {
     .write = my_write,    
 };
 
-static int __init drv4_init(void) /* Constructor */
+int display_init(void) /* Constructor */
 {
 int ret = 0;
   buffer = (char *)vmalloc( BUFFER_LENGTH );
@@ -80,17 +80,15 @@ int ret = 0;
 }
 
 
-static void __exit drv4_exit(void) /* Destructor */
+void display_exit(void) /* Destructor */
 {
-    cdev_del(&c_dev);
-    device_destroy(cl, first);
-    class_destroy(cl);
-    unregister_chrdev_region(first, 1);
-    printk(KERN_INFO "lcd_display: Desinstalado exitosamente!!\n");
+  remove_proc_entry("lcd_display", NULL);
+  vfree(buffer);
+  printk(KERN_INFO "lcd_display: Modulo descargado..!!\n");
 }
 
-module_init(drv4_init);
-module_exit(drv4_exit);
+module_init(display_init);
+module_exit(display_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Codebusters");
