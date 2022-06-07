@@ -4,6 +4,7 @@
 #include <linux/types.h>
 #include <linux/kdev_t.h>
 #include <linux/fs.h>
+#include <linux/string.h>
 #include <linux/device.h>
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
@@ -40,6 +41,7 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
         char* cmd_argv[] = {cmd_path,buffer,NULL};
         char* cmd_envp[] = {"HOME=/", "PATH=/sbin:/bin:/usr/bin", NULL};
         int result = call_usermodehelper(cmd_path, cmd_argv, cmd_envp, UMH_WAIT_PROC);
+        bzero(buffer, BUFFER_LENGTH);
         return len;
     }
 }
