@@ -17,17 +17,6 @@
 static struct proc_dir_entry *proc_entry;
 static char buffer[BUFFER_LENGTH];
 
-static int my_open(struct inode *i, struct file *f)
-{
-    printk(KERN_INFO "lcd_display: open()\n");
-    return 0;
-}
-static int my_close(struct inode *i, struct file *f)
-{
-    printk(KERN_INFO "lcd_display: close()\n");
-    return 0;
-}
-
 static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff_t *off)
 {
     printk(KERN_INFO "lcd_display: write()\n");
@@ -48,8 +37,6 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
 }
 
 static const struct file_operations proc_entry_fops = {
-    .open = my_open,
-    .close = my_close,
     .write = my_write,    
 };
 
