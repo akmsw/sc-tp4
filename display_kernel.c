@@ -5,7 +5,6 @@
 #include <linux/kdev_t.h>
 #include <linux/fs.h>
 #include <linux/proc_fs.h>
-#include <linux/string.h>
 #include <linux/vmalloc.h>
 #include <linux/device.h>
 #include <linux/cdev.h>
@@ -43,7 +42,6 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
         char* cmd_envp[] = {"HOME=/", "PATH=/sbin:/bin:/usr/bin", NULL};
         int result = call_usermodehelper(cmd_path, cmd_argv, cmd_envp, UMH_WAIT_PROC);
         printk(KERN_DEBUG "test driver init exec! there result of call_usermodehelper is %d\n", result);
-        bzero(buffer,32);
         return len;
     }
         
