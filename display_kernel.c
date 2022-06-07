@@ -4,8 +4,6 @@
 #include <linux/types.h>
 #include <linux/kdev_t.h>
 #include <linux/fs.h>
-#include <linux/proc_fs.h>
-#include <linux/vmalloc.h>
 #include <linux/device.h>
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
@@ -13,19 +11,32 @@
 
 #define BUFFER_LENGTH       32
 
+static dev_t first; 		// Global variable for the first device number
+static struct cdev c_dev; 	// Global variable for the character device structure
+static struct class *cl; 	// Global variable for the device class
 
-static struct proc_dir_entry *proc_entry;
 static char buffer[BUFFER_LENGTH];
+
+static int my_open(struct inode *i, struct file *f)
+{
+    printk(KERN_INFO "display_kernel: open()\n");
+    return 0;
+}
+static int my_close(struct inode *i, struct file *f)
+{
+    printk(KERN_INFO "display_kernel: close()\n");
+    return 0;
+}
 
 static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff_t *off)
 {
-    printk(KERN_INFO "lcd_display: write()\n");
+    printk(KERN_INFO "display_kernel: write()\n");
 
     if ( copy_from_user(buffer, buf, len ))
         return -EFAULT;
     else{
         //llamar a la python shit
-        printk("lcd_display: se va a imprimir: %s",buffer);
+        printk("Display Driver: se va a imprimir: %s",buffer);
         char cmd_path[] = "/usr/bin/lcdwriter";
         char* cmd_argv[] = {cmd_path,buffer,NULL};
         char* cmd_envp[] = {"HOME=/", "PATH=/sbin:/bin:/usr/bin", NULL};
@@ -36,34 +47,60 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
         
 }
 
-static const struct file_operations proc_entry_fops = {
-    .write = my_write,    
+static struct file_operations pugs_fops =
+{
+    .owner = THIS_MODULE,
+    .open = my_open,
+    .release = my_close,
+    .write = my_write
 };
 
-int display_init(void) /* Constructor */
+static int __init drv4_init(void) /* Constructor */
 {
-    proc_entry = proc_create( "lcd_display", 0666, NULL, &proc_entry_fops);
-    if (proc_entry == NULL) {
-      ret = -ENOMEM;
-      vfree(buffer);
-      printk(KERN_INFO "lcd_display: No puede crear entrada en /proc..!!\n");
-    } else {
-      printk(KERN_INFO "lcd_display: Modulo cargado..!!\n");
+    int ret;
+    struct device *dev_ret;
+    printk(KERN_INFO "display_kernel: Registrado exitosamente..!!\n");
+
+    if ((ret = alloc_chrdev_region(&first, 0, 1, "display_kernel")) < 0)
+    {
+        return ret;
     }
 
-  return ret;
+    if (IS_ERR(cl = class_create(THIS_MODULE, "display_kernel")))
+    {
+        unregister_chrdev_region(first, 1);
+        return PTR_ERR(cl);
+    }
+
+    if (IS_ERR(dev_ret = device_create(cl, NULL, first, NULL, "display_kernel")))
+    {
+        class_destroy(cl);
+        unregister_chrdev_region(first, 1);
+        return PTR_ERR(dev_ret);
+    }
+
+    cdev_init(&c_dev, &pugs_fops);
+    if ((ret = cdev_add(&c_dev, first, 1)) < 0)
+    {
+        device_destroy(cl, first);
+        class_destroy(cl);
+        unregister_chrdev_region(first, 1);
+        return ret;
+    }
+    return 0;
 }
 
-
-void display_exit(void) /* Destructor */
+static void __exit drv4_exit(void) /* Destructor */
 {
-  remove_proc_entry("lcd_display", NULL);
-  vfree(buffer);
-  printk(KERN_INFO "lcd_display: Modulo descargado..!!\n");
+    cdev_del(&c_dev);
+    device_destroy(cl, first);
+    class_destroy(cl);
+    unregister_chrdev_region(first, 1);
+    printk(KERN_INFO "display_kernel: Desinstalado exitosamente!!\n");
 }
 
-module_init(display_init);
-module_exit(display_exit);
+module_init(drv4_init);
+module_exit(drv4_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Codebusters");
