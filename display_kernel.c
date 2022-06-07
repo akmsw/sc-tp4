@@ -53,7 +53,7 @@ int ret = 0;
     proc_entry = proc_create( "lcd_display", 0666, NULL, &proc_entry_fops);
     if (proc_entry == NULL) {
       ret = -ENOMEM;
-      vfree(clipboard);
+      vfree(buffer);
       printk(KERN_INFO "lcd_display: No puede crear entrada en /proc..!!\n");
     } else {
       printk(KERN_INFO "lcd_display: Modulo cargado..!!\n");
