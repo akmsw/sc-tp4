@@ -19,32 +19,29 @@ static char buffer[BUFFER_LENGTH];
 
 static int my_open(struct inode *i, struct file *f)
 {
-    printk(KERN_INFO "display_kernel: open()\n");
+    printk(KERN_INFO "display_driver: open()\n");
     return 0;
 }
 static int my_close(struct inode *i, struct file *f)
 {
-    printk(KERN_INFO "display_kernel: close()\n");
+    printk(KERN_INFO "display_driver: close()\n");
     return 0;
 }
 
 static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff_t *off)
 {
-    printk(KERN_INFO "display_kernel: write()\n");
+    printk(KERN_INFO "display_driver: write()\n");
 
     if ( copy_from_user(buffer, buf, len ))
         return -EFAULT;
     else{
-        //llamar a la python shit
-        printk("Display Driver: se va a imprimir: %s",buffer);
+        printk("display_driver: se va a imprimir: %s",buffer);
         char cmd_path[] = "/usr/bin/lcdwriter";
         char* cmd_argv[] = {cmd_path,buffer,NULL};
         char* cmd_envp[] = {"HOME=/", "PATH=/sbin:/bin:/usr/bin", NULL};
         int result = call_usermodehelper(cmd_path, cmd_argv, cmd_envp, UMH_WAIT_PROC);
-        printk(KERN_DEBUG "test driver init exec! there result of call_usermodehelper is %d\n", result);
         return len;
     }
-        
 }
 
 static struct file_operations pugs_fops =
@@ -59,20 +56,20 @@ static int __init drv4_init(void) /* Constructor */
 {
     int ret;
     struct device *dev_ret;
-    printk(KERN_INFO "display_kernel: Registrado exitosamente..!!\n");
+    printk(KERN_INFO "display_driver: Registrado exitosamente..!!\n");
 
-    if ((ret = alloc_chrdev_region(&first, 0, 1, "display_kernel")) < 0)
+    if ((ret = alloc_chrdev_region(&first, 0, 1, "display_driver")) < 0)
     {
         return ret;
     }
 
-    if (IS_ERR(cl = class_create(THIS_MODULE, "display_kernel")))
+    if (IS_ERR(cl = class_create(THIS_MODULE, "display_driver")))
     {
         unregister_chrdev_region(first, 1);
         return PTR_ERR(cl);
     }
 
-    if (IS_ERR(dev_ret = device_create(cl, NULL, first, NULL, "display_kernel")))
+    if (IS_ERR(dev_ret = device_create(cl, NULL, first, NULL, "display_driver")))
     {
         class_destroy(cl);
         unregister_chrdev_region(first, 1);
@@ -96,7 +93,7 @@ static void __exit drv4_exit(void) /* Destructor */
     device_destroy(cl, first);
     class_destroy(cl);
     unregister_chrdev_region(first, 1);
-    printk(KERN_INFO "display_kernel: Desinstalado exitosamente!!\n");
+    printk(KERN_INFO "display_driver: Desinstalado exitosamente!!\n");
 }
 
 module_init(drv4_init);
