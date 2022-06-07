@@ -32,8 +32,11 @@ int main()
             if (strcmp(buffer, "salir") == 0)
                 break;
 
+            buffer[strlen(buffer) - 1] = '\0';
+
             fwrite(buffer, sizeof(char), strlen(buffer), file);
             fflush(file);
+            bzero(buffer, 512);
         }
     }
 
