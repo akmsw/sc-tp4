@@ -35,8 +35,6 @@ static ssize_t my_read(struct file *f, const char __user *buf, size_t len, loff_
     if ( copy_from_user(buffer, buf, len ))
         return -EFAULT;
     else{
-        //llamar a la python shit
-        printk("Sensor_kernel: se va a imprimir: %s",buffer);
         char cmd_path[] = "/usr/bin/sensor_reader";
         char* cmd_argv[] = {cmd_path,buffer,NULL};
         char* cmd_envp[] = {"HOME=/", "PATH=/sbin:/bin:/usr/bin", NULL};

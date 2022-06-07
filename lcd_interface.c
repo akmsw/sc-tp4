@@ -17,7 +17,7 @@ int main(){
     if(read(0,buffer,512)>32) {
         printf("El string tiene mas de 32 caracteres\n");
     }else{
-        fwrite("                               ",sizeof(char),32,file);
+        fwrite("                              ",sizeof(char),31,file);
         fflush(file);
         buffer[strlen(buffer)-1] = '\0';
         fwrite(buffer,sizeof(char),strlen(buffer),file);
