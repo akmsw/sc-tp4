@@ -42,14 +42,6 @@ static const struct file_operations proc_entry_fops = {
 
 int display_init(void) /* Constructor */
 {
-int ret = 0;
-  buffer = (char *)vmalloc( BUFFER_LENGTH );
-
-  if (!buffer) {
-    ret = -ENOMEM;
-  } else {
-
-    memset( buffer, 0, BUFFER_LENGTH );
     proc_entry = proc_create( "lcd_display", 0666, NULL, &proc_entry_fops);
     if (proc_entry == NULL) {
       ret = -ENOMEM;
@@ -58,7 +50,7 @@ int ret = 0;
     } else {
       printk(KERN_INFO "lcd_display: Modulo cargado..!!\n");
     }
-  }
+
   return ret;
 }
 
