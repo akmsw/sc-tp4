@@ -14,10 +14,8 @@
 
 #define BUFFER_LENGTH       32
 
-static dev_t first; 		// Global variable for the first device number
-static struct cdev c_dev; 	// Global variable for the character device structure
-static struct class *cl; 	// Global variable for the device class
 
+static struct proc_dir_entry *proc_entry;
 static char buffer[BUFFER_LENGTH];
 
 static int my_open(struct inode *i, struct file *f)
