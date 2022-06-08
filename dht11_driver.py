@@ -19,3 +19,4 @@ while(-1):
         print(s,file=f,flush=True)
     else:
         print('ERROR',file=f,flush=True)
+    sleep(1)
