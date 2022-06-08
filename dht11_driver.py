@@ -11,8 +11,9 @@ GPIO.cleanup()
 f = open('/dev/display_driver','w')
 # read data using pin 16
 instance = dht11.DHT11(pin = 16)
-result = instance.read()
+
 while(-1):
+    result = instance.read()
     if result.is_valid():
         s = 'Temp: {}C Hum: {}'.format(result.temperature,result.humidity)
         print(s)
