@@ -18,4 +18,4 @@ while(-1):
         print(s)
         print(s,file=f,flush=True)
     else:
-        f.write("ERROR")
+        print('ERROR',file=f,flush=True)
