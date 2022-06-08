@@ -36,6 +36,7 @@ static ssize_t my_write(struct file *f, const char __user *buf, size_t len, loff
     if ( copy_from_user(buffer, buf, len ))
         return -EFAULT;
     else{
+        buffer[strlen(buffer)-1]='\0';
         printk("display_driver: se va a imprimir: %s",buffer);
         char cmd_path[] = "/usr/bin/lcdwriter";
         char* cmd_argv[] = {cmd_path,buffer,NULL};
