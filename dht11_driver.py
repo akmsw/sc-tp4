@@ -6,12 +6,14 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.cleanup()
 
-# read data using pin 14
-instance = dht11.DHT11(pin = 14)
-result = instance.read()
+#open de display driver
+f = open('/dev/display_driver','w')
 
-if result.is_valid():
-    print("Temperature: %-3.1f C" % result.temperature)
-    print("Humidity: %-3.1f %%" % result.humidity)
-else:
-    print("Error: %d" % result.error_code)
+# read data using pin 16
+instance = dht11.DHT11(pin = 16)
+result = instance.read()
+while(-1):
+    if result.is_valid():
+        f.write("Temperature: %-3.1f C Humidity: %-3.1f %%" %(result.temperature,result.humidity))
+    else:
+        f.write("Error: %d" % result.error_code)
