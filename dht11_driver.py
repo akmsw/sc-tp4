@@ -17,5 +17,7 @@ while(-1):
         s = 'Temperature: {} C Humidity: {}'.format(result.temperature,result.humidity)
         print(s)
         f.write(s)
+        f.flush()
     else:
         f.write("ERROR")
+        f.flush()
