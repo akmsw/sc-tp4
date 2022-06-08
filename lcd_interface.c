@@ -33,7 +33,7 @@ int main()
         fwrite(buffer, sizeof(char), strlen(buffer), file);
         fflush(file);
 
-        bzero(buffer, 512);
+        bzero(buffer, 32);
     }
 
     fclose(file);
