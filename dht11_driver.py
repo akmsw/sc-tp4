@@ -8,18 +8,14 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.cleanup()
 
 #open de display driver
-
+f = open('/dev/display_driver','w')
 # read data using pin 16
 instance = dht11.DHT11(pin = 16)
 result = instance.read()
 while(-1):
-    f = open('/dev/display_driver','w')
     if result.is_valid():
         s = 'Temperature: {} C Humidity: {}'.format(result.temperature,result.humidity)
         print(s)
-        f.write(s)
-        f.close()
+        print(s,file=f,flush=True)
     else:
         f.write("ERROR")
-        f.close()
-    sleep(1)
