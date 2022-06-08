@@ -1,3 +1,4 @@
+from time import sleep
 import RPi.GPIO as GPIO
 import dht11
 
@@ -21,3 +22,4 @@ while(-1):
     else:
         f.write("ERROR")
         f.flush()
+    sleep(1)
