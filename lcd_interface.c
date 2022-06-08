@@ -6,6 +6,13 @@
 
 int main()
 {
+    if (access("/dev/display_driver", (R_OK | W_OK)) != 0)
+    {
+        printf("MÓDULO NO CARGADO");
+
+        exit(EXIT_FAILURE);
+    }
+
     FILE *file = fopen("/dev/display_driver", "w");
 
     char buffer[32];
