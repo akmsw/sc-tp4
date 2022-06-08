@@ -8,6 +8,7 @@ default:
 	mkdir -p ~/lcd
 	gcc lcdwriter.c -o lcdwriter
 	gcc lcd_interface.c -o interface
+	gcc dht11reader.c -o dht11reader
 	sudo cp lcd_write.py /usr/bin/lcd_write.py
 	sudo cp RPi_I2C_driver.py /usr/bin/RPi_I2C_driver.py
 	sudo cp lcdwriter /usr/bin/lcdwriter
