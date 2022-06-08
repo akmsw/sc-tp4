@@ -15,6 +15,7 @@ result = instance.read()
 while(-1):
     if result.is_valid():
         s = 'Temperature: {} C Humidity: {}'.format(result.temperature,result.humidity)
+        print(s)
         f.write(s)
     else:
         f.write("ERROR")
