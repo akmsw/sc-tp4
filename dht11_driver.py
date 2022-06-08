@@ -14,7 +14,7 @@ instance = dht11.DHT11(pin = 16)
 result = instance.read()
 while(-1):
     if result.is_valid():
-        s = 'Temperature: {} C Humidity: {}'.format(result.temperature,result.humidity)
+        s = 'Temp: {}C Hum: {}'.format(result.temperature,result.humidity)
         print(s)
         print(s,file=f,flush=True)
     else:
