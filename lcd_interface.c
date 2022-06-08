@@ -8,38 +8,35 @@ int main()
 {
     FILE *file = fopen("/dev/display_kernel", "w");
 
-    char buffer[512];
+    char buffer[32];
 
-    bzero(buffer, 512);
+    bzero(buffer, 32);
 
     if (!file)
     {
         printf("Error al abrir CDD");
+
         exit(EXIT_FAILURE);
     }
 
     while (-1)
     {
-        write(1, "Ingrese string a enviar al display: ", 37);
+        write(STDOUT_FILENO, "Ingrese string a enviar al display: ", 37);
 
-        if (read(0, buffer, 512) > 32)
-        {
-            printf("El string tiene mas de 32 caracteres\n");
-            continue;
-        }
-        else
-        {
-            if (strcmp(buffer, "salir") == 0)
-                break;
+        read(0, buffer, 32);
 
-            buffer[strlen(buffer) - 1] = '\0';
+        if (strcmp(buffer, "salir") == 0)
+            break;
 
-            fwrite(buffer, sizeof(char), strlen(buffer), file);
-            fflush(file);
-            bzero(buffer, 512);
-        }
+        buffer[strlen(buffer) - 1] = '\0';
+
+        fwrite(buffer, sizeof(char), strlen(buffer), file);
+        fflush(file);
+
+        bzero(buffer, 512);
     }
 
     fclose(file);
+
     return 0;
 }
