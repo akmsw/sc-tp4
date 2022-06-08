@@ -28,7 +28,7 @@ int main()
         if (strcmp(buffer, "salir") == 0)
             break;
 
-        buffer[strlen(buffer) - 1] = '\0';
+        buffer[strlen(buffer)] = '\0';
 
         fwrite(buffer, sizeof(char), strlen(buffer), file);
         fflush(file);
