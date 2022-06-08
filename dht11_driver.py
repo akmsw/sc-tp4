@@ -1,6 +1,8 @@
 from time import sleep
+
 import RPi.GPIO as GPIO
 import dht11
+import os
 
 # inicialización gpio
 GPIO.setwarnings(False)
@@ -8,7 +10,11 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.cleanup()
 
 # apertura de driver de display
-f = open('/dev/display_driver','w')
+if os.path.exists('/dev/display_driver'):
+    f = open('/dev/display_driver','w')
+else
+    print('MÓDULO NO CARGADO')
+    exit()
 
 # vamos a leer por puerto 16
 instance = dht11.DHT11(pin=16)
