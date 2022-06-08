@@ -22,3 +22,4 @@ while(-1):
     else:
         f.write("ERROR")
         f.close()
+    sleep(1)
