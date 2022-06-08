@@ -12,8 +12,9 @@ f = open('/dev/display_driver','w')
 # read data using pin 16
 instance = dht11.DHT11(pin = 16)
 result = instance.read()
-f.write("AAAASSS")
-# if result.is_valid():
-#     f.write('Temperature: {} C Humidity: {}'.format(result.temperature,result.humidity))
-# else:
-#     f.write('Error: {}'.format(result.error_code))
+while(-1):
+    if result.is_valid():
+        s = 'Temperature: {} C Humidity: {}'.format(result.temperature,result.humidity)
+        f.write(s)
+    else:
+        f.write("ERROR")
