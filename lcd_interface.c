@@ -6,7 +6,7 @@
 
 int main()
 {
-    FILE *file = fopen("/dev/display_kernel", "w");
+    FILE *file = fopen("/dev/display_driver", "w");
 
     char buffer[32];
 
