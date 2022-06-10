@@ -12,7 +12,7 @@ GPIO.cleanup()
 # apertura de driver de display
 if os.path.exists('/dev/display_driver'):
     f = open('/dev/display_driver','w')
-else
+else:
     print('MÓDULO NO CARGADO')
     exit()
 
